@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Hexo">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Hexo">
+    <meta name="description" content="Boundary Smoothing for Named Entity RecognitionAbstractNER 模型很容易遇到 over-confidence 的问题从而导致模型性能的下降。受到标签平滑启发和在 NER enginee">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Hexo</title>
+    <title>Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -335,12 +335,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -376,7 +376,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2023-02-23
+                    2023-02-24
                 </div>
                 
 
@@ -397,20 +397,19 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+                <h1 id="Boundary-Smoothing-for-Named-Entity-Recognition"><a href="#Boundary-Smoothing-for-Named-Entity-Recognition" class="headerlink" title="Boundary Smoothing for Named Entity Recognition"></a>Boundary Smoothing for Named Entity Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>NER 模型很容易遇到 over-confidence 的问题从而导致模型性能的下降。受到标签平滑启发和在 NER engineering 中实体边界标注的不确定性，我们为 span-based 的 NER 模型提出了boundary smoothing 正则化方式。在标注的实体周围重新分配实体概率。应用在一个简单但很强的 baseline 上，我们的模型在8个知名的 NER benchmark 上取得比之前 sota 还要好或者相当的结果。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>一个实体只有当它的类型和边界都和 GT 一样才视为正确识别</p>
+<p>边界的标注和实体类型相比更加不确定，更容易出错，比较容易导致不一致性。</p>
+<p>![image-20220412232442081](Boundary Smoothing for Named Entity Recognition/image-20220412232442081.png)</p>
+<p>近期出现了许多 span-based 的 NER 模型并取得了不错的结果。这类方法通常是枚举候选 spans 然后进行实体分类。一个句子中标注的 span 是很少的，并且以 1 的概率表示这是个实体，剩下的 span 的概率都为0。这样会造成分类目标和它相邻的 span 的 sharpness，可能也会导致模型不太好训练。此外，实验表明这些模型容易遇到 over-confidence 的问题，i.e.  预测实体的置信度会远高于它的真实概率。</p>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><p>![image-20220413112832098](Boundary Smoothing for Named Entity Recognition/image-20220413112832098.png) </p>
+<p>![image-20220413112857261](Boundary Smoothing for Named Entity Recognition/image-20220413112857261.png)</p>
+<p>![image-20220413113854143](Boundary Smoothing for Named Entity Recognition/image-20220413113854143.png)</p>
+<p><strong>Biaffifine Decoder</strong></p>
+<p>![image-20220413102600790](Boundary Smoothing for Named Entity Recognition/image-20220413102600790.png)</p>
+<p>![image-20220413105552416](Boundary Smoothing for Named Entity Recognition/image-20220413105552416.png)</p>
+<p>![image-20220413113958450](Boundary Smoothing for Named Entity Recognition/image-20220413113958450.png)</p>
+<h2 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h2>
                 
             </div>
             <hr/>
@@ -436,7 +435,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://JiaYongL.github.io/2023/02/23/hello-world/">http://JiaYongL.github.io/2023/02/23/hello-world/</a>
+                    <a href="http://JiaYongL.github.io/2023/02/24/Boundary%20Smoothing%20for%20Named%20Entity%20Recognition/">http://JiaYongL.github.io/2023/02/24/Boundary%20Smoothing%20for%20Named%20Entity%20Recognition/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -550,9 +549,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2023/02/24/Boundary%20Smoothing%20for%20Named%20Entity%20Recognition/">
                     <div class="card-image">
@@ -570,9 +570,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-02-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -581,6 +581,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -588,7 +589,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2023/02/23/hello-world/">
@@ -618,7 +619,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
